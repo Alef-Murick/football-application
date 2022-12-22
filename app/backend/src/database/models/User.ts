@@ -1,7 +1,7 @@
 import { Model, INTEGER, STRING } from "sequelize";
 import db from '.';
 
-class UsersModel extends Model {
+class User extends Model {
   declare id: number;
   declare username: string;
   declare role: string;
@@ -9,7 +9,7 @@ class UsersModel extends Model {
   declare password: string;
 }
 
-UsersModel.init({
+User.init({
   id: {
     allowNull: false,
     autoIncrement: true,
@@ -41,4 +41,4 @@ UsersModel.init({
     timestamps: false,
   })
 
-  export default UsersModel;
+  export default User;
