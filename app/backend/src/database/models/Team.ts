@@ -16,7 +16,7 @@ Team.init({
   },
   teamName: {
     allowNull: false,
-    type: STRING(36),
+    type: STRING(100),
   },
 
 },
