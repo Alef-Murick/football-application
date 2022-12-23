@@ -12,7 +12,15 @@ export default class LoginController {
     }
     res.status(status).json({ message });
   }
-}
+
+  async getLogin(req: Request, res: Response) {
+    const { status, message } = await this.loginService.validateLogin(req.headers.authorization);
+    if (status === 200) {
+      res.status(status).json({ token: message });
+    }
+    res.status(status).json({ message });
+  } 
+  
 // console.log('status~~~~~~~', status);
 // console.log('message~~~~~~~', message);
 // console.log('req.body~~~~~~~~~', req.body);

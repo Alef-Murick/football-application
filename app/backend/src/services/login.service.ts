@@ -6,7 +6,10 @@ import { validatePassword } from "../middlewares/validations";
 
 export default class LoginService {
   async login(login: iLogin): Promise<{ status: number, message: string }> {
-    if (login.email || login.password) {  
+    
+    if (!login.email || login.password) {  
+      return { status: 400, message: 'All fields must be filled'}
+    } 
       const user = await User.findOne({ where: { email: login.email } })
       const password = await user?.dataValues.password;
       
@@ -19,8 +22,10 @@ export default class LoginService {
         }
       }
       return { status: 401, message: 'Incorrect email or password' }
-    } 
-    return { status: 400, message: 'All fields must be filled'}
+  }
+
+  async validateLogin(authorization) {
+    const validateToken = await this.validateToken(authorization);
   }
 }
 
