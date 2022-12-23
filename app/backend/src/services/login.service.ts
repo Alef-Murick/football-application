@@ -26,7 +26,6 @@ export default class LoginService {
 
   async validateLogin(authorization: string) {
     const {status, message} = await validateToken(authorization);
-    console.log('validation in service~~~~~~~~~~', message);
     
     if (status === 200) {
       return { status: 200, message}
@@ -35,4 +34,5 @@ export default class LoginService {
   }
 }
 
+// console.log('validation in service~~~~~~~~~~', message);
 // console.log('password service=============: ', password);

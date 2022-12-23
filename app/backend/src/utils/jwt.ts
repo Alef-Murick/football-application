@@ -17,9 +17,10 @@ export const validateToken = async (auth: string) => {
   console.log('validate in jwt~~~~~~~~~~~~~~~', validate);
   
   if (typeof validate !== 'string') {
-    console.log('validata.data.role<<<<<<<<<<<<<', validate.data.role);
     
     return { status: 200, message: validate.data.role}
   }
   return { status: 401, message: validate };
 }
+
+// console.log('validata.data.role<<<<<<<<<<<<<', validate.data.role);
