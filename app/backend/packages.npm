@@ -1,4 +1,3 @@
-jwt
 bcryptjs
 @types/bcryptjs
 express-async-errors
