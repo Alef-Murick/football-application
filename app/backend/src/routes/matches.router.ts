@@ -5,6 +5,5 @@ const matchesRouter = Router();
 
 const matches = new MatchesController();
 
-matchesRouter.get('/validate', (req, res) => matches.getMatches(req, res));
-
-export default matchesRouter;
+matchesRouter.get('/', (req, res) => matches.getMatches(req, res));
+matchesRouter.get('/', (req, res) => matches.getLiveMatches(req, res));
