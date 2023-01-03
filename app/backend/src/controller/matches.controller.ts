@@ -23,12 +23,18 @@ export default class MatchesController {
 
   async postMatch(req: Request, res: Response) {
     const { authorization } = req.headers;
-    const {homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = req.body
+    const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = req.body
 
     if (authorization) {
       const { status, message } = await this.MatchesService.createMatch(authorization, homeTeam, awayTeam, homeTeamGoals, awayTeamGoals)
       return res.status(status).json(message);
     }
     res.status(401).json({ message: 'Token required!' });
+  }
+
+  async patchMatch(req: Request, res: Response) {
+    const { id } = req.params;
+    await this.MatchesService.updateMatch(id)
+    return res.status(200).json({ message: 'Finished' });
   }
 }

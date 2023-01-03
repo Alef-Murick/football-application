@@ -69,5 +69,9 @@ async findFinishedMatches(): Promise<{ status: number, message: string | iMatch[
     
     return { status: 201, message: match }
   }
+
+  async updateMatch(id: string): Promise <void> {
+    const match = await Match.update({ inProgress: false }, { where: { id } });
+  }
 }
 
