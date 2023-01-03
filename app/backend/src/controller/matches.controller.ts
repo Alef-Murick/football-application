@@ -29,7 +29,7 @@ export default class MatchesController {
       const { status, message } = await this.MatchesService.createMatch(authorization, homeTeam, awayTeam, homeTeamGoals, awayTeamGoals)
       return res.status(status).json(message);
     }
-    res.status(401).json({ message: 'Token required!' });
+    res.status(401).json({ message: 'Token must be a valid token' });
   }
 
   async patchMatch(req: Request, res: Response) {
