@@ -22,7 +22,7 @@ export default class LoginController {
         res.status(status).json({ role: message });
       }
     }
-    res.status(201).json({ message: 'Token required!' });
+    res.status(401).json({ message: 'Token required!' });
   }
 }
   

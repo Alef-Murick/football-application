@@ -1,6 +1,7 @@
 import { iMatch } from "../interfaces/iMatch";
 import Match from "../database/models/Match";
 import Team from "../database/models/Team";
+import { validateToken } from "../utils/jwt";
 
 export default class MatchesService {
   async findAllMatches(): Promise<{ status: number, message: iMatch[] }> {
@@ -53,5 +54,14 @@ async findFinishedMatches(): Promise<{ status: number, message: string | iMatch[
     ],})
     return { status: 200, message: matches }
 }
+  async createMatch(authorization: string, body: object)/* : Promise<{ status: number, message: string | iMatch[] }> */ {
+    const {status, message} = await validateToken(authorization)
+
+    const match = await Match.create({ body })
+    console.log('match>>>>>>>>>>>>><<<<<<<<<<<<<<<<', match);
+    
+    
+    return { status: 201, message: match }
+  }
 }
 
