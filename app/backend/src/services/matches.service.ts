@@ -57,7 +57,7 @@ async findFinishedMatches(): Promise<{ status: number, message: string | iMatch[
   async createMatch(authorization: string, body: object)/* : Promise<{ status: number, message: string | iMatch[] }> */ {
     const {status, message} = await validateToken(authorization)
 
-    const match = await Match.create({ body })
+    const match = await Match.create({ body, inProgress: true })
     console.log('match>>>>>>>>>>>>><<<<<<<<<<<<<<<<', match);
     
     
