@@ -13,4 +13,9 @@ MatchesService = new MatchesService();
     const { status, message } = await this.MatchesService.findLiveMatches();
     return res.status(status).json(message);
   }
+
+  async getFinishedMatches(_req: Request, res: Response) {
+    const { status, message } = await this.MatchesService.findLiveMatches();
+    return res.status(status).json(message);
+  }
 }
