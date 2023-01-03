@@ -1,5 +1,6 @@
 import { iTeam } from "../interfaces/iTeam";
 import Team from "../database/models/Team"
+import { iMatch } from "../interfaces/iMatch";
 
 export default class TeamsService {
   async getAllTeams(): Promise<iTeam[]> {
@@ -13,6 +14,16 @@ export default class TeamsService {
       return { status: 200, message: team };
     }
     return {status: 404, message: 'id not found'}
+  }
+
+  async getTeamByName(homeTeam: iMatch, awayTeam: iMatch) {
+    const team1 = await Team.findOne({ where: { teamName: homeTeam } });
+    const team2 = await Team.findOne({ where: { teamName: awayTeam } });
+
+    if (!team1 || !team2) {
+      return { status: 404, message: 'There is no team with such id!' };
+    }
+    return {status: 201, message: 'Valid team'}
   }
 }
 

@@ -2,8 +2,10 @@ import { iMatch } from "../interfaces/iMatch";
 import Match from "../database/models/Match";
 import Team from "../database/models/Team";
 import { validateToken } from "../utils/jwt";
+import TeamsService from "./teams.service";
 
 export default class MatchesService {
+  teamService = new TeamsService();
   async findAllMatches(): Promise<{ status: number, message: iMatch[] }> {
     const matches = await Match.findAll({
       include: [
@@ -61,10 +63,15 @@ async findFinishedMatches(): Promise<{ status: number, message: string | iMatch[
     homeTeamGoals: iMatch,
     awayTeamGoals: iMatch,
   ): Promise<{ status: number, message: string | iMatch }> {
-    const {status, message} = await validateToken(authorization)
-
+    const { status, message } = await validateToken(authorization)
+    
+    if (homeTeam === awayTeam) {
+      return { status: 422, message: 'It is not possible to create a match with two equal teams' }
+    }
+    
+    const validateTeams = await this.teamService.getTeamByName(homeTeam, awayTeam)
     const match = await Match.create({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress: true })
-    console.log('match>>>>>>>>>>>>><<<<<<<<<<<<<<<<', match);
+    // console.log('match>>>>>>>>>>>>><<<<<<<<<<<<<<<<', match);
     
     
     return { status: 201, message: match }
