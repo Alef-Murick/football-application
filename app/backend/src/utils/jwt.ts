@@ -20,7 +20,7 @@ export const validateToken = async (auth: string) => {
     
     return { status: 200, message: validate.data.role}
   }
-  return { status: 401, message: validate };
+  return { status: 401, message: 'Token must be a valid token'};
 }
 
 // console.log('validata.data.role<<<<<<<<<<<<<', validate.data.role);
