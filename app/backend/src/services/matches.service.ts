@@ -54,10 +54,16 @@ async findFinishedMatches(): Promise<{ status: number, message: string | iMatch[
     ],})
     return { status: 200, message: matches }
 }
-  async createMatch(authorization: string, body: object)/* : Promise<{ status: number, message: string | iMatch[] }> */ {
+  async createMatch(
+    authorization: string,
+    homeTeam: iMatch,
+    awayTeam: iMatch,
+    homeTeamGoals: iMatch,
+    awayTeamGoals: iMatch,
+  ): Promise<{ status: number, message: string | iMatch }> {
     const {status, message} = await validateToken(authorization)
 
-    const match = await Match.create({ body, inProgress: true })
+    const match = await Match.create({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress: true })
     console.log('match>>>>>>>>>>>>><<<<<<<<<<<<<<<<', match);
     
     
