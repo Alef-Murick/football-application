@@ -83,5 +83,19 @@ async findFinishedMatches(): Promise<{ status: number, message: string | iMatch[
   async updateMatch(id: string): Promise <void> {
     const match = await Match.update({ inProgress: false }, { where: { id } });
   }
+
+
+  static async updateLiveMatch(
+    id: string,
+    homeTeamGoals: iMatch,
+    awayTeamGoals: iMatch,
+  ): Promise<void> {    
+    if (homeTeamGoals) {
+      await Match.update({ homeTeamGoals }, { where: { id } });
+    }
+    if (awayTeamGoals) {
+      await Match.update({ awayTeamGoals }, { where: { id } });
+    }
+  }
 }
 
