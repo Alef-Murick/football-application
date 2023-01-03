@@ -7,3 +7,5 @@ const matches = new MatchesController();
 
 matchesRouter.get('/', (req, res) => matches.getMatches(req, res));
 matchesRouter.get('/', (req, res) => matches.getLiveMatches(req, res));
+
+export default matchesRouter
