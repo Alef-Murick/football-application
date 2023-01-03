@@ -58,8 +58,8 @@ async findFinishedMatches(): Promise<{ status: number, message: string | iMatch[
 }
   async createMatch(
     authorization: string,
-    homeTeam: iMatch,
-    awayTeam: iMatch,
+    homeTeam: number,
+    awayTeam: number,
     homeTeamGoals: iMatch,
     awayTeamGoals: iMatch,
   ): Promise<{ status: number, message: string | iMatch }> {
