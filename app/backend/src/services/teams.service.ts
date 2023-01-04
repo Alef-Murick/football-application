@@ -16,7 +16,7 @@ export default class TeamsService {
     return {status: 404, message: 'id not found'}
   }
 
-  async getTeamByName(homeTeam: string, awayTeam: string) {
+  async getTeamByName(homeTeam: number, awayTeam: number) {
     const team1 = await Team.findByPk(homeTeam);
     const team2 = await Team.findByPk(awayTeam);
 

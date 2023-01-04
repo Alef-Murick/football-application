@@ -58,21 +58,19 @@ async findFinishedMatches(): Promise<{ status: number, message: string | iMatch[
 }
   async createMatch(
     authorization: string,
-    homeTeam: string,
-    awayTeam: string,
-    homeTeamGoals: iMatch,
-    awayTeamGoals: iMatch,
+    homeTeam: number,
+    awayTeam: number,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
   ): Promise<{ status: number, message: string | iMatch }> {
     // const { status } = await validateToken(authorization)
     
     // if (status === 200) {      
-        
+      const validateTeams = await this.teamService.getTeamByName(homeTeam, awayTeam)
+      if (validateTeams.status === 201) {     
       if (homeTeam === awayTeam) {
         return { status: 422, message: 'It is not possible to create a match with two equal teams' }
       }
-    
-      const validateTeams = await this.teamService.getTeamByName(homeTeam, awayTeam)
-      if (validateTeams.status === 201) {
         const match = await Match.create({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress: true })
         // console.log('match>>>>>>>>>>>>><<<<<<<<<<<<<<<<', match);    
         return { status: 201, message: match }
