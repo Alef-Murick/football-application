@@ -60,8 +60,8 @@ async findFinishedMatches(): Promise<{ status: number, message: string | iMatch[
     authorization: string,
     homeTeam: number,
     awayTeam: number,
-    homeTeamGoals: iMatch,
-    awayTeamGoals: iMatch,
+    homeTeamGoals: number,
+    awayTeamGoals: number,
   ): Promise<{ status: number, message: string | iMatch }> {
     console.log('authoriziation in service>>>>>>>>>>>>>>>>>>>', authorization);
     
@@ -90,7 +90,7 @@ async findFinishedMatches(): Promise<{ status: number, message: string | iMatch[
   }
 
 
-  static async updateLiveMatch(
+ async updateLiveMatch(
     id: string,
     homeTeamGoals: iMatch,
     awayTeamGoals: iMatch,
