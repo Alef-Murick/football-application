@@ -19,9 +19,13 @@ export default class TeamsService {
   async getTeamByName(homeTeam: number, awayTeam: number) {
     const team1 = await Team.findByPk(homeTeam);
     const team2 = await Team.findByPk(awayTeam);
-
+    
     if (!team1 || !team2) {
       return { status: 404, message: 'There is no team with such id!' };
+    }
+    
+    if (team1 === team2) {
+      return { status: 422, message: 'It is not possible to create a match with two equal teams' }
     }
     return {status: 201, message: 'Valid team'}
   }
