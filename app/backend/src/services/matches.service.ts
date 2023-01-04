@@ -63,9 +63,9 @@ async findFinishedMatches(): Promise<{ status: number, message: string | iMatch[
     homeTeamGoals: iMatch,
     awayTeamGoals: iMatch,
   ): Promise<{ status: number, message: string | iMatch }> {
-    const { status } = await validateToken(authorization)
+    // const { status } = await validateToken(authorization)
     
-    if (status === 200) {      
+    // if (status === 200) {      
         
       if (homeTeam === awayTeam) {
         return { status: 422, message: 'It is not possible to create a match with two equal teams' }
@@ -79,15 +79,15 @@ async findFinishedMatches(): Promise<{ status: number, message: string | iMatch[
       }
       return { status: validateTeams.status, message: validateTeams.message }
       }
-      return { status: 401, message: 'Token must be a valid token'};
-  }
+      // return { status: 401, message: 'Token must be a valid token'};
+  // }
 
   async updateMatch(id: string): Promise <void> {
     const match = await Match.update({ inProgress: false }, { where: { id } });
   }
 
 
-  static async updateLiveMatch(
+ async updateLiveMatch(
     id: string,
     homeTeamGoals: iMatch,
     awayTeamGoals: iMatch,
