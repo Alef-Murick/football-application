@@ -20,10 +20,10 @@ export default class TeamsService {
     const team1 = await Team.findByPk(homeTeam);
     const team2 = await Team.findByPk(awayTeam);
 
-    if (!team1 || !team2) {
-      return { status: 404, message: 'There is no team with such id!' };
+    if (team1 && team2) {
+      return {status: 201, message: 'Valid team'}
     }
-    return {status: 201, message: 'Valid team'}
+    return { status: 404, message: 'There is no team with such id!' };
   }
 }
 

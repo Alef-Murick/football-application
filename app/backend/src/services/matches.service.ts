@@ -67,7 +67,8 @@ async findFinishedMatches(): Promise<{ status: number, message: string | iMatch[
     
     // if (status === 200) {      
       const validateTeams = await this.teamService.getTeamByName(homeTeam, awayTeam)
-      if (validateTeams.status === 201) {     
+      if (validateTeams.status === 201) {
+      
       if (homeTeam === awayTeam) {
         return { status: 422, message: 'It is not possible to create a match with two equal teams' }
       }
