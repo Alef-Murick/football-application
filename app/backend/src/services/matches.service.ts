@@ -76,11 +76,13 @@ async findFinishedMatches(): Promise<{ status: number, message: string | iMatch[
       }
     
       const validateTeams = await this.teamService.getTeamByName(homeTeam, awayTeam)
-      const match = await Match.create({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress: true })
-      console.log('match>>>>>>>>>>>>><<<<<<<<<<<<<<<<', match);
-    
-    
-      return { status: 201, message: match }
+      
+        if (validateTeams.status === 201) { 
+          const match = await Match.create({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress: true })
+          console.log('match>>>>>>>>>>>>><<<<<<<<<<<<<<<<', match);
+          return { status: 201, message: match }
+        }
+        return { status: validateTeams.status, message: validateTeams.message };
     }
     return { status: 401, message: 'Token must be a valid token'};
   }
