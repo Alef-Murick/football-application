@@ -16,7 +16,7 @@ export const validateToken = async (auth: string) => {
   const validate = jwt.verify(auth, jwtSecret);
   console.log('validate in jwt~~~~~~~~~~~~~~~', validate);
   
-  if (typeof validate !== 'string') {
+  if (typeof validate !== 'string' && validate) {
     
     return { status: 200, message: validate.data.role}
   }
