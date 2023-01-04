@@ -27,7 +27,12 @@ export default class MatchesController {
 
     if (authorization) {
       const { status, message } = await this.MatchesService.createMatch(authorization, homeTeam, awayTeam, homeTeamGoals, awayTeamGoals)
-      return res.status(status).json(message);
+      console.log('STATUS IN CONTROLLER<<<<<>>>>>', status);
+      console.log('MESSAGE IN CONTROLLER<<<<<>>>>>', message);
+      if (status === 201) {
+        return res.status(status).json(message);
+      }
+      return res.status(status).json({ message });
     }
     res.status(401).json({ message: 'Token must be a valid token' });
   }
