@@ -57,26 +57,30 @@ async findFinishedMatches(): Promise<{ status: number, message: string | iMatch[
     return { status: 200, message: matches }
 }
   async createMatch(
+    authorization: string,
     homeTeam: number,
     awayTeam: number,
     homeTeamGoals: number,
     awayTeamGoals: number,
   ): Promise<{ status: number, message: string | iMatch }> {
-    console.log('homeTeam in service-----------------', homeTeam);
-    console.log('awayTeam in service=================', awayTeam);
+    // console.log('homeTeam in service-----------------', homeTeam);
+    // console.log('awayTeam in service=================', awayTeam);
+    if (homeTeam === awayTeam) {
+      return { status: 422, message: 'It is not possible to create a match with two equal teams' }
+    }
     
-      if (homeTeam === awayTeam) {
-        return { status: 422, message: 'It is not possible to create a match with two equal teams' }
+    const validateTeams = await this.teamService.getTeamByName(homeTeam, awayTeam)
+    
+    if (validateTeams.status === 201) {
+      const token = await validateToken(authorization)
+        if (token.status === 200) {
+        const match = await Match.create({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress: true })
+        // console.log('match>>>>>>>>>>>>><<<<<<<<<<<<<<<<', match);
+        return { status: 201, message: match }
       }
-      
-      const validateTeams = await this.teamService.getTeamByName(homeTeam, awayTeam)
-      
-      if (validateTeams.status === 201) { 
-          const match = await Match.create({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress: true })
-          console.log('match>>>>>>>>>>>>><<<<<<<<<<<<<<<<', match);
-          return { status: 201, message: match }
-        }
-        return { status: validateTeams.status, message: validateTeams.message };
+      return { status: token.status, message: token.message };
+    }
+    return { status: validateTeams.status, message: validateTeams.message };
   }
 
   async updateMatch(id: string): Promise <void> {

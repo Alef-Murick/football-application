@@ -26,9 +26,7 @@ export default class MatchesController {
     const { authorization } = req.headers;
     const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = req.body
     if (authorization) {
-    const token = await validateToken(authorization)
-    if (token.status === 200) {
-        const { status, message } = await this.MatchesService.createMatch(homeTeam, awayTeam, homeTeamGoals, awayTeamGoals)
+        const { status, message } = await this.MatchesService.createMatch(authorization, homeTeam, awayTeam, homeTeamGoals, awayTeamGoals)
         console.log('STATUS IN CONTROLLER<<<<<>>>>>', status);
         console.log('MESSAGE IN CONTROLLER<<<<<>>>>>', message);
         if (status === 201) {
@@ -36,7 +34,7 @@ export default class MatchesController {
         }
         return res.status(status).json({ message });
       }
-    }
+    
     res.status(401).json({ message: 'Token must be a valid token' });
   }
 
