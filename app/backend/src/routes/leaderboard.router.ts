@@ -5,6 +5,8 @@ const leaderboardRouter = Router();
 
 const leader = new Leaderboard();
 
-leaderboardRouter.post('/home', (req, res) => leader.getLeaderboard(req, res));
+leaderboardRouter.get('/home', (req, res) => leader.getLeaderboard(req, res));
+leaderboardRouter.get('/away', (req, res) => leader.getLeaderboard(req, res));
+leaderboardRouter.get('/', (req, res) => leader.getLeaderboard(req, res));
 
 export default leaderboardRouter;
