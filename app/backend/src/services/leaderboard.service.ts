@@ -1,9 +1,12 @@
 import MatchesService from "./matches.service";
+import TeamsService from "./teams.service";
 
-export default class LeaderboardService extends MatchesService {
+export default class LeaderboardService {
   async getLeaderboards() {
-    const matches = await this.findFinishedMatches()
-    const teams = await this.teamService.getAllTeams();
+    const matchesService = new MatchesService()
+    const teamService = new TeamsService()
+    const matches = await matchesService.findFinishedMatches();
+    const teams = await teamService.getAllTeams();
     const leaderboard = teams.map((team) => {
       
       const table = {
@@ -22,8 +25,8 @@ export default class LeaderboardService extends MatchesService {
       if (typeof matches.message !== "string") {
 
         matches.message.forEach(async (match) => {
-          const homeTeam = await this.teamService.getTeamById(match.homeTeam);
-          const awayTeam = await this.teamService.getTeamById(match.awayTeam);
+          const homeTeam = await teamService.getTeamById(match.homeTeam);
+          // const awayTeam = await this.teamService.getTeamById(match.awayTeam);
           if (typeof homeTeam.message !== "string") {
             if (team.teamName === homeTeam.message.teamName) {
               if (match.homeTeamGoals > match.awayTeamGoals) {
