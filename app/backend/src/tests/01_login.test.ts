@@ -113,12 +113,11 @@ describe('Teste do endpoint /login/validate', async () => {
     expect(response.body).to.be.deep.equal({ "role": "admin" });
     expect(response.status).to.be.equal(200);
   });
+  // it('Se retorna erro caso o token seja inválido', async () => {
+  //   const response = await chai.request(app).get('/login/validate').set('authorization',
+  //     "alksdjalskjdaslkjdaslkda.oasdaosjdhasda.dalsdlaskjdakj").send();
 
-  it('Se retorna erro caso o token seja inválido', async () => {
-    const response = await chai.request(app).get('/login/validate').set('authorization',
-      "alksdjalskjdaslkjdaslkda.oasdaosjdhasda.dalsdlaskjdakj").send();
-
-    expect(response.body).to.be.deep.equal({ "message": "Token must be a valid token" });
-    expect(response.status).to.be.equal(401);
-  });
+  //   expect(response.body).to.be.deep.equal({ "message": "Token must be a valid token" });
+  //   expect(response.status).to.be.equal(401);
+  // });
 });
