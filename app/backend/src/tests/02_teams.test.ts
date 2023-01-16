@@ -1,6 +1,5 @@
 import * as sinon from 'sinon';
 import * as chai from 'chai';
-import * as bcrypt from 'bcryptjs';
 // @ts-ignore
 import chaiHttp = require('chai-http');
 
@@ -8,18 +7,6 @@ import App from '../app';
 import Team from '../database/models/Team';
 
 import { Response } from 'superagent';
-
-const Login = {
-  email: "asdfas",
-  password: "secret_admin",
-}
-
-const users = {
-  id: 1,
-  username: 'Admin',
-  role: 'admin',
-  email: 'admin@admin.com',
-}
 
 const teams = [
   { "id": 1, "teamName": "Avaí/Kindermann" },
@@ -55,7 +42,7 @@ describe('Testando a rota /teams', () => {
   afterEach(() => {
     (Team.findAll as sinon.SinonStub).restore();
   });
-  
+
 });
 
 
