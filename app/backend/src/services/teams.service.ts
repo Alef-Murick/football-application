@@ -1,6 +1,5 @@
 import { iTeam } from "../interfaces/iTeam";
 import Team from "../database/models/Team"
-import { iMatch } from "../interfaces/iMatch";
 
 export default class TeamsService {
   async getAllTeams(): Promise<iTeam[]> {
@@ -26,6 +25,3 @@ export default class TeamsService {
     return { status: 404, message: 'There is no team with such id!' };
   }
 }
-
-// console.log('teams in service', teams);
-// console.log('team by id in service', team);

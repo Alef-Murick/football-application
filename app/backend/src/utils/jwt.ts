@@ -13,14 +13,13 @@ export function createToken(data: IUser) {
 }
 
 export const validateToken = async (auth: string) => {
-  const validate = jwt.verify(auth, jwtSecret);
-  console.log('validate in jwt~~~~~~~~~~~~~~~', validate);
-  
-  if (typeof validate !== 'string' && validate) {
+  try {
+    const validate = jwt.verify(auth, jwtSecret);
     
-    return { status: 200, message: validate.data.role}
+    if (typeof validate !== 'string') {    
+      return { status: 200, message: validate.data.role }
+    }
+  } catch (err) {
+    return { status: 401, message: 'Token must be a valid token'};
   }
-  return { status: 401, message: 'Token must be a valid token'};
 }
-
-// console.log('validata.data.role<<<<<<<<<<<<<', validate.data.role);

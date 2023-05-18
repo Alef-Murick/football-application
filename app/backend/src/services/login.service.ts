@@ -5,6 +5,7 @@ import { validatePassword } from "../middlewares/validations";
 
 
 export default class LoginService {
+  
   async login(login: iLogin): Promise<{ status: number, message: string }> {
     
     if (!login.email || !login.password) {  
@@ -25,14 +26,11 @@ export default class LoginService {
   }
 
   async validateLogin(authorization: string) {
-    const {status, message} = await validateToken(authorization);
+    const validate = await validateToken(authorization);
     
-    if (status === 200) {
-      return { status: 200, message}
+    if (validate && validate.status === 200) {
+      return { status: 200, message: validate.message}
     }
-    return { status: 401, message }
+    return { status: 401, message: validate?.message }
   }
 }
-
-// console.log('validation in service~~~~~~~~~~', message);
-// console.log('password service=============: ', password);

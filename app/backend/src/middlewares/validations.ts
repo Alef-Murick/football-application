@@ -8,7 +8,3 @@ export const validatePassword = async (password: string, loginPassword: string) 
   }
   return {message: 'ok'}
 }
-
-// console.log('validate password~~~~~~~~~~~~~', validate);
-// console.log('PASSWORD IN VALIDATION~~~~~~~~~~~~~~~~~', password);
-// console.log('LOGIN PASSWORD~~~~~~~~~~~~~~~', loginPassword);

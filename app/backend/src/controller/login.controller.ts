@@ -22,10 +22,6 @@ export default class LoginController {
         res.status(status).json({ role: message });
       }
     }
-    res.status(401).json({ message: 'Token required!' });
+    res.status(401).json({ message: 'Token must be a valid token' });
   }
 }
-  
-// console.log('status~~~~~~~', status);
-// console.log('message~~~~~~~', message);
-// console.log('req.body~~~~~~~~~', req.body);

@@ -6,7 +6,8 @@ import TeamsService from "./teams.service";
 
 export default class MatchesService {
   teamService = new TeamsService();
-  async findAllMatches(): Promise<{ status: number, message: iMatch[] }> {
+
+  public async findAllMatches(): Promise<{ status: number, message: iMatch[] }> {
     const matches = await Match.findAll({
       include: [
         {
@@ -23,7 +24,7 @@ export default class MatchesService {
     return { status: 200, message: matches}
   }
 
-  async findLiveMatches(): Promise<{ status: number, message: string | iMatch[] }>  {
+  public async findLiveMatches(): Promise<{ status: number, message: string | iMatch[] }>  {
     const matches = await Match.findAll({
       where: { inProgress: true },
       include: [
@@ -40,7 +41,7 @@ export default class MatchesService {
       return { status: 200, message: matches }
   }
 
-async findFinishedMatches(): Promise<{ status: number, message: string | iMatch[] }>  {
+  public async findFinishedMatches(): Promise<{ status: number, message: string | iMatch[] }>  {
   const matches = await Match.findAll({
     where: { inProgress: false },
     include: [
@@ -56,15 +57,13 @@ async findFinishedMatches(): Promise<{ status: number, message: string | iMatch[
     ],})
     return { status: 200, message: matches }
 }
-  async createMatch(
+  public async createMatch(
     authorization: string,
     homeTeam: number,
     awayTeam: number,
     homeTeamGoals: number,
     awayTeamGoals: number,
   ): Promise<{ status: number, message: string | iMatch }> {
-    // console.log('homeTeam in service-----------------', homeTeam);
-    // console.log('awayTeam in service=================', awayTeam);
     if (homeTeam === awayTeam) {
       return { status: 422, message: 'It is not possible to create a match with two equal teams' }
     }
@@ -73,12 +72,14 @@ async findFinishedMatches(): Promise<{ status: number, message: string | iMatch[
     
     if (validateTeams.status === 201) {
       const token = await validateToken(authorization)
+      if (token) {
+
         if (token.status === 200) {
-        const match = await Match.create({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress: true })
-        // console.log('match>>>>>>>>>>>>><<<<<<<<<<<<<<<<', match);
-        return { status: 201, message: match }
+          const match = await Match.create({ homeTeam, awayTeam, homeTeamGoals, awayTeamGoals, inProgress: true })
+          return { status: 201, message: match }
+        }
+        return { status: token.status, message: token.message };
       }
-      return { status: token.status, message: token.message };
     }
     return { status: validateTeams.status, message: validateTeams.message };
   }

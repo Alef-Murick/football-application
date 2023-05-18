@@ -18,6 +18,3 @@ export default class TeamsController {
     return res.status(status).json(message);
   }
 }
-
-// console.log('id><><<><<><><><><><<><<',id);
-// console.log('teams in controller');

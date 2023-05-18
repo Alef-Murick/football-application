@@ -25,10 +25,10 @@ export default class MatchesController {
   async postMatch(req: Request, res: Response) {
     const { authorization } = req.headers;
     const { homeTeam, awayTeam, homeTeamGoals, awayTeamGoals } = req.body
+    
     if (authorization) {
-        const { status, message } = await this.MatchesService.createMatch(authorization, homeTeam, awayTeam, homeTeamGoals, awayTeamGoals)
-        console.log('STATUS IN CONTROLLER<<<<<>>>>>', status);
-        console.log('MESSAGE IN CONTROLLER<<<<<>>>>>', message);
+      const { status, message } = await this.MatchesService.createMatch(authorization, homeTeam, awayTeam, homeTeamGoals, awayTeamGoals)
+      
         if (status === 201) {
           return res.status(status).json(message);
         }
